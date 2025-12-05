@@ -38,12 +38,12 @@ const IconCard: React.FC<IconCardProps> = ({ icon }) => {
   };
 
   return (
-    <div className="group relative bg-slate-800 rounded-xl border border-slate-700 hover:border-indigo-500 transition-all duration-300 flex flex-col overflow-hidden">
+    <div className="group relative bg-slate-900 rounded-xl border border-slate-800 hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col overflow-hidden">
       
       {/* Icon Preview */}
-      <div className="h-40 flex items-center justify-center p-6 bg-slate-900/50 relative">
-        <div className="text-white w-16 h-16 transition-transform group-hover:scale-110 duration-300">
-           {/* Render raw HTML for the SVG path since it comes from trusted AI generation logic */}
+      <div className="h-40 flex items-center justify-center p-6 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-opacity-5 relative">
+        <div className="absolute inset-0 bg-slate-950/50"></div>
+        <div className="text-slate-200 w-16 h-16 transition-transform group-hover:scale-110 duration-300 relative z-10">
            <svg 
              viewBox="0 0 48 48" 
              className="w-full h-full"
@@ -57,17 +57,17 @@ const IconCard: React.FC<IconCardProps> = ({ icon }) => {
         </div>
 
         {/* Action Overlay */}
-        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+        <div className="absolute inset-0 bg-slate-950/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 z-20 backdrop-blur-sm">
             <button 
                 onClick={handleDownload}
-                className="p-2 bg-slate-700 hover:bg-indigo-600 rounded-full text-white transition-colors"
+                className="p-2.5 bg-slate-800 hover:bg-indigo-600 rounded-full text-white transition-colors border border-slate-700 hover:border-indigo-500"
                 title="Download SVG"
             >
                 <Download size={18} />
             </button>
             <button 
                 onClick={() => setShowCode(!showCode)}
-                className="p-2 bg-slate-700 hover:bg-indigo-600 rounded-full text-white transition-colors"
+                className="p-2.5 bg-slate-800 hover:bg-indigo-600 rounded-full text-white transition-colors border border-slate-700 hover:border-indigo-500"
                 title="View Code"
             >
                 <Code size={18} />
@@ -76,14 +76,14 @@ const IconCard: React.FC<IconCardProps> = ({ icon }) => {
       </div>
 
       {/* Details */}
-      <div className="p-4 flex-1 flex flex-col border-t border-slate-700 bg-slate-800">
+      <div className="p-4 flex-1 flex flex-col border-t border-slate-800 bg-slate-900">
         <h3 className="font-semibold text-slate-200 text-sm truncate" title={icon.name}>{icon.name}</h3>
-        <p className="text-xs text-slate-400 mt-1 line-clamp-2">{icon.description}</p>
+        <p className="text-[10px] text-slate-500 mt-1 line-clamp-2 uppercase tracking-wide font-medium">{icon.description}</p>
       </div>
 
       {/* Code Modal / Drawer */}
       {showCode && (
-        <div className="absolute inset-0 bg-slate-900 z-10 flex flex-col p-4 animate-in fade-in zoom-in-95 duration-200">
+        <div className="absolute inset-0 bg-slate-950 z-30 flex flex-col p-4 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex justify-between items-center mb-2">
                 <span className="text-xs font-mono text-indigo-400">SVG Source</span>
                 <button 
@@ -93,12 +93,12 @@ const IconCard: React.FC<IconCardProps> = ({ icon }) => {
                     &times;
                 </button>
             </div>
-            <pre className="flex-1 overflow-auto text-[10px] text-slate-300 font-mono p-2 bg-slate-800 rounded border border-slate-700">
+            <pre className="flex-1 overflow-auto text-[10px] text-slate-400 font-mono p-3 bg-slate-900 rounded border border-slate-800 custom-scrollbar">
                 {svgContent}
             </pre>
             <button 
                 onClick={handleCopyCode}
-                className="mt-2 w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded flex items-center justify-center gap-2"
+                className="mt-3 w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center justify-center gap-2 transition-colors"
             >
                 {copied ? <span>Copied!</span> : <><Copy size={12} /> Copy SVG</>}
             </button>
